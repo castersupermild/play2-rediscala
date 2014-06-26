@@ -2,13 +2,13 @@ import sbt._
 import sbt.Keys._
 
 object BuildSettings {
-  val buildVersion = "1.0.1"
+  val buildVersion = "1.0.2"
 
   val buildSettings = Defaults.defaultSettings ++ Seq(
     organization := "fr.njin",
     version := buildVersion,
-    scalaVersion := "2.10.2",
-    crossScalaVersions := Seq("2.10.2"),
+    scalaVersion := "2.10.4",
+    crossScalaVersions := Seq("2.10.4"),
     crossVersion := CrossVersion.binary
   ) ++ Publish.settings ++
     ScctPlugin.instrumentSettings ++
@@ -69,9 +69,9 @@ object RediscalaBuild extends Build {
         "scct-github-repository" at "http://mtkopone.github.com/scct/maven-repo"
       ),
       libraryDependencies ++= Seq(
-        "com.etaty.rediscala" %% "rediscala" % "1.3" cross CrossVersion.binary,
-        "play" %% "play" % "2.1.0" cross CrossVersion.binary,
-        "play" %% "play-test" % "2.1.0" % "test" cross CrossVersion.binary,
+        "com.etaty.rediscala" %% "rediscala" % "1.3.1" cross CrossVersion.binary,
+        "com.typesafe.play" %% "play" % "2.3.0" cross CrossVersion.binary,
+        "com.typesafe.play" %% "play-test" % "2.3.0" % "test" cross CrossVersion.binary,
         "org.specs2" %% "specs2" % "2.1.1" % "test" cross CrossVersion.binary
       )
     )
