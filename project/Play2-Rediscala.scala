@@ -10,9 +10,7 @@ object BuildSettings {
     scalaVersion := "2.10.4",
     crossScalaVersions := Seq("2.10.4", "2.11.0"),
     crossVersion := CrossVersion.binary
-  ) ++ Publish.settings ++
-    ScctPlugin.instrumentSettings ++
-    CoverallsPlugin.coverallsSettings
+  ) ++ Publish.settings
 }
 
 object Publish {
