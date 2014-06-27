@@ -23,6 +23,10 @@ class RedisPlugin(app: Application) extends Plugin {
     case Some(conf) => new RedisClient(conf._1, conf._2, conf._3.map(_._2))
     case _ => throw new PlayException("RedisPlugin Error", s"No configuration found for db $db")
   }
+
+  override def onStop() {
+    Logger.info("RedisPlugin stopping...")
+  }
   
 }
 

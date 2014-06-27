@@ -1,13 +1,14 @@
-# Redis Scala Support to Play! Framework 2.1 [![Build Status](https://travis-ci.org/njin-fr/play2-rediscala.png?branch=master)](https://travis-ci.org/njin-fr/play2-rediscala) [![Coverage Status](https://coveralls.io/repos/njin-fr/play2-rediscala/badge.png)](https://coveralls.io/r/njin-fr/play2-rediscala)
+# Redis Scala Support to Play! Framework 2.3 [![Build Status](https://travis-ci.org/njin-fr/play2-rediscala.png?branch=master)](https://travis-ci.org/njin-fr/play2-rediscala) [![Coverage Status](https://coveralls.io/repos/njin-fr/play2-rediscala/badge.png)](https://coveralls.io/r/njin-fr/play2-rediscala)
 
-This is a plugin for Play 2.1, enabling support for [Rediscala](https://github.com/etaty/rediscala) - A Redis client for Scala (2.10+) and (AKKA 2.2+) with non-blocking and asynchronous I/O operations.
+This is a plugin for Play 2.3, enabling support for [Rediscala](https://github.com/etaty/rediscala) - A Redis client for Scala (2.10+) and (AKKA 2.2+) with non-blocking and asynchronous I/O operations.
 
 ## How to use it
 
 Add the plugin to your dependencies
 
 ```scala
-"fr.njin" %% "play2-rediscala" % "1.0.1"
+resolvers += "play2-rediscala" at "http://dl.bintray.com/jansen/maven"
+"fr.njin" %% "play2-rediscala" % "1.0.2"
 ```
 
 And declare it in conf/play.plugins
