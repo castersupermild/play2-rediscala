@@ -14,7 +14,9 @@ object BuildSettings {
 }
 
 object Publish {
-  lazy val settings = bintray.Plugin.bintrayPublishSettings
+  lazy val settings = bintray.Plugin.bintrayPublishSettings ++ Seq(
+    licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
+  )
 }
 
 object RediscalaBuild extends Build {
