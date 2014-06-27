@@ -1,5 +1,7 @@
+import bintray.Plugin
 import sbt._
 import sbt.Keys._
+import bintray.Keys._
 
 object BuildSettings {
   val buildVersion = "1.0.2"
@@ -14,7 +16,9 @@ object BuildSettings {
 }
 
 object Publish {
-  lazy val settings = bintray.Plugin.bintrayPublishSettings ++ Seq(
+  lazy val settings = Plugin.bintrayPublishSettings ++ Seq(
+    repository in bintray := "maven",
+    bintrayOrganization in bintray := Some("yorrick"),
     licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
   )
 }
