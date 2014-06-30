@@ -1,10 +1,11 @@
 package play.modules.rediscala
 
 import play.api._
-import java.net.URI
-import scala.Some
+import java.net.{InetSocketAddress, URI}
+import redis.actors.RedisSubscriberActor
 import redis.RedisClient
 import akka.actor.ActorSystem
+
 
 class RedisPlugin(app: Application) extends Plugin {
 
@@ -71,4 +72,18 @@ object RedisPlugin {
     }
     (jUri.getHost, port, userInfo)
   }
+}
+
+
+/**
+ * This actor uses play application configuration to create the InetSocketAddress
+ * @param channels
+ * @param patterns
+ */
+abstract class RedisPluginSubscriberActor(channels: Seq[String] = Nil, patterns: Seq[String] = Nil)(implicit app: Application)
+  extends RedisSubscriberActor(new InetSocketAddress("localhost", 6379), channels, patterns) {
+
+  // use application configuration
+  val redisConfig = RedisPlugin.parseConf(app.configuration)
+  override val address = new InetSocketAddress(redisConfig._1, redisConfig._2)
 }

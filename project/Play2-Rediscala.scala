@@ -6,7 +6,7 @@ import scoverage.ScoverageSbtPlugin
 import scoverage.ScoverageSbtPlugin._
 
 object BuildSettings {
-  val buildVersion = "1.0.2"
+  val buildVersion = "1.0.3"
 
   val settings = Defaults.defaultSettings ++ Seq(
     organization := "fr.njin",
