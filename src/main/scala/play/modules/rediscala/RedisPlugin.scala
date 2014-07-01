@@ -73,17 +73,3 @@ object RedisPlugin {
     (jUri.getHost, port, userInfo)
   }
 }
-
-
-/**
- * This actor uses play application configuration to create the InetSocketAddress
- * @param channels
- * @param patterns
- */
-abstract class RedisPluginSubscriberActor(channels: Seq[String] = Nil, patterns: Seq[String] = Nil)(implicit app: Application)
-  extends RedisSubscriberActor(new InetSocketAddress("localhost", 6379), channels, patterns) {
-
-  // use application configuration
-  val redisConfig = RedisPlugin.parseConf(app.configuration)
-  override val address = new InetSocketAddress(redisConfig._1, redisConfig._2)
-}
