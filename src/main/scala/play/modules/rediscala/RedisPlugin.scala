@@ -3,7 +3,8 @@ package play.modules.rediscala
 import play.api._
 import java.net.{InetSocketAddress, URI}
 import redis.actors.RedisSubscriberActor
-import redis.RedisClient
+import redis.api.pubsub.{PMessage, Message}
+import redis.{RedisClient, RedisPubSub}
 import akka.actor.ActorSystem
 
 
@@ -20,8 +21,15 @@ class RedisPlugin(app: Application) extends Plugin {
     Logger.info("RedisPlugin started")
   }
 
-  def client(db:String)(implicit system:ActorSystem):RedisClient = confs.get(db) match {
+  def client(db:String)(implicit system:ActorSystem): RedisClient = confs.get(db) match {
+      // TODO add support for db: Option[Int] to allow database selection
     case Some(conf) => new RedisClient(conf._1, conf._2, conf._3.map(_._2))
+    case _ => throw new PlayException("RedisPlugin Error", s"No configuration found for db $db")
+  }
+
+  def pubsub(db: String, channels: Seq[String], patterns: Seq[String],
+             onMessage: Message => Unit, onPMessage: PMessage => Unit)(implicit system:ActorSystem): RedisPubSub = confs.get(db) match {
+    case Some(conf) => new RedisPubSub(conf._1, conf._2, channels, patterns, onMessage, onPMessage, conf._3.map(_._2))
     case _ => throw new PlayException("RedisPlugin Error", s"No configuration found for db $db")
   }
 
@@ -34,6 +42,9 @@ class RedisPlugin(app: Application) extends Plugin {
 object RedisPlugin {
 
   def client(db: String = "default")(implicit app: Application, system: ActorSystem) = current.client(db)
+  def pubsub(db: String = "default", channels: Seq[String], patterns: Seq[String],
+             onMessage: Message => Unit = _ => {}, onPMessage: PMessage => Unit = _ => {})
+            (implicit app: Application, system: ActorSystem) = current.pubsub(db, channels, patterns, onMessage, onPMessage)
 
   def current(implicit app: Application): RedisPlugin = app.plugin[RedisPlugin] match {
     case Some(plugin) => plugin

@@ -79,9 +79,41 @@ class RedisPluginSpec extends Specification {
       mydb.stop()
       (mydb.host, mydb.port) must be equalTo ("an.host.com", 9092)
     }
+
     "Throw a an exception if database is not configured" in {
       val app = FakeApplication(additionalPlugins = Seq("play.modules.rediscala.RedisPlugin"))
       RedisPlugin.client("mydb")(app, Akka.system(app)) must throwA[PlayException]
+    }
+
+    "Should provide RedisPubSub for default configuration" in {
+      val app = FakeApplication(additionalPlugins = Seq("play.modules.rediscala.RedisPlugin"))
+      val pubsub = RedisPlugin.pubsub(channels = Seq[String](), patterns = Seq[String]())(app, Akka.system(app))
+      pubsub.stop()
+      (pubsub.host, pubsub.port) must be equalTo ("localhost", 6379)
+    }
+    "Throw an exception if plugin is not registered" in {
+      val app = FakeApplication(withoutPlugins = Seq("play.modules.rediscala.RedisPlugin"))
+      RedisPlugin.pubsub(channels = Seq[String](), patterns = Seq[String]())(app, Akka.system(app)) must throwA[PlayException]
+    }
+    "Should provide RedisPubSub for multiple databases" in {
+      val app = FakeApplication(
+        additionalPlugins = Seq("play.modules.rediscala.RedisPlugin"),
+        additionalConfiguration = Map(
+          "redis.default.uri" -> "redis://localhost",
+          "redis.mydb.uri" -> "redis://user:password@an.host.com:9092/"
+        )
+      )
+      val default = RedisPlugin.pubsub(channels = Seq[String](), patterns = Seq[String]())(app, Akka.system(app))
+      default.stop()
+      (default.host, default.port) must be equalTo ("localhost", 6379)
+      val mydb = RedisPlugin.pubsub("mydb", channels = Seq[String](), patterns = Seq[String]())(app, Akka.system(app))
+      mydb.stop()
+      (mydb.host, mydb.port) must be equalTo ("an.host.com", 9092)
+    }
+
+    "Throw a an exception if database is not configured" in {
+      val app = FakeApplication(additionalPlugins = Seq("play.modules.rediscala.RedisPlugin"))
+      RedisPlugin.pubsub("mydb", channels = Seq[String](), patterns = Seq[String]())(app, Akka.system(app)) must throwA[PlayException]
     }
   }
 
