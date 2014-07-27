@@ -21,6 +21,7 @@ Get your client
 
 ```scala
 val client = RedisPlugin.client()(app, Akka.system(app))
+val pubsub = RedisPlugin.pubsub(channels = Seq("mychannel"), patterns = Seq[String](), onMessage = {message => println(s"$message")})(app, Akka.system(app))
 ```
 
 or
@@ -30,6 +31,7 @@ import play.api.Play.current
 implicit val system = Akka.system
 
 val client = RedisPlugin.client()
+val pubsub = RedisPlugin.pubsub(channels = Seq("mychannel"), patterns = Seq[String](), onMessage = {message => println(s"$message")})
 ```
 
 [Use it](https://github.com/etaty/rediscala)
