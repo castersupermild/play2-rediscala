@@ -8,7 +8,7 @@ Add the plugin to your dependencies
 
 ```scala
 resolvers += "play2-rediscala" at "http://dl.bintray.com/yorrick/maven"
-"fr.njin" %% "play2-rediscala" % "1.0.2"
+"fr.njin" %% "play2-rediscala" % "2.3.0.0"
 ```
 
 And declare it in conf/play.plugins
