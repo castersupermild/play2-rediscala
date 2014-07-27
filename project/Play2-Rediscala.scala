@@ -5,8 +5,14 @@ import bintray.Keys._
 import scoverage.ScoverageSbtPlugin
 import scoverage.ScoverageSbtPlugin._
 
+
+object Versions {
+  lazy val play = "2.3.0"
+  lazy val play2RedisScala = s"$play.0"
+}
+
 object BuildSettings {
-  val buildVersion = "1.0.3"
+  val buildVersion = Versions.play2RedisScala
 
   val settings = Defaults.defaultSettings ++ Seq(
     organization := "fr.njin",
@@ -23,7 +29,9 @@ object CoverageSettings {
       ScoverageKeys.minimumCoverage := 80,
       ScoverageKeys.failOnMinimumCoverage := false,
       ScoverageKeys.excludedPackages in ScoverageCompile := "<empty>;Reverse.*;"
-    ) ++ CoverallsPlugin.coverallsSettings
+    ) ++ CoverallsPlugin.coverallsSettings ++ Seq(
+      CoverallsPlugin.CoverallsKeys.coverallsToken := Some("ry8vH3uqfSTlpNtbL0Go58d3IpNsAJcVq")
+    )
 }
 
 
