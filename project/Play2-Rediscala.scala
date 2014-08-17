@@ -7,8 +7,8 @@ import scoverage.ScoverageSbtPlugin._
 
 
 object Versions {
-  lazy val play = "2.3.0"
-  lazy val play2RedisScala = s"$play.1"
+  lazy val play = "2.3.1"
+  lazy val play2RedisScala = s"$play.0"
 }
 
 object BuildSettings {
@@ -62,8 +62,8 @@ object RediscalaBuild extends Build {
         ),
         libraryDependencies ++= Seq(
           "com.etaty.rediscala" %% "rediscala" % "1.3.1",
-          "com.typesafe.play" %% "play" % "2.3.0",
-          "com.typesafe.play" %% "play-test" % "2.3.0" % "test"
+          "com.typesafe.play" %% "play" % Versions.play,
+          "com.typesafe.play" %% "play-test" % Versions.play % "test"
         ),
         libraryDependencies <+= scalaVersion(specs2(_))
       )
