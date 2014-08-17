@@ -8,7 +8,7 @@ import scoverage.ScoverageSbtPlugin._
 
 object Versions {
   lazy val play = "2.3.0"
-  lazy val play2RedisScala = s"$play.0"
+  lazy val play2RedisScala = s"$play.1"
 }
 
 object BuildSettings {
@@ -61,11 +61,18 @@ object RediscalaBuild extends Build {
         "scct-github-repository" at "http://mtkopone.github.com/scct/maven-repo"
         ),
         libraryDependencies ++= Seq(
-          "com.etaty.rediscala" %% "rediscala" % "1.3.1" cross CrossVersion.binary,
-          "com.typesafe.play" %% "play" % "2.3.0" cross CrossVersion.binary,
-          "com.typesafe.play" %% "play-test" % "2.3.0" % "test" cross CrossVersion.binary,
-          "org.specs2" %% "specs2" % "2.1.1" % "test" cross CrossVersion.binary
-        )
+          "com.etaty.rediscala" %% "rediscala" % "1.3.1",
+          "com.typesafe.play" %% "play" % "2.3.0",
+          "com.typesafe.play" %% "play-test" % "2.3.0" % "test"
+        ),
+        libraryDependencies <+= scalaVersion(specs2(_))
       )
   )
+
+  // Helper method to pattern match against the scala version and return the correct specs version
+  def specs2(scalaVersion: String): ModuleID =
+    (scalaVersion match {
+      case version if version.startsWith("2.11") => "org.specs2" %% "specs2" % "2.3.11"
+      case _ => "org.specs2" %% "specs2" % "2.1.1"
+    }) % "test"
 }
