@@ -7,7 +7,7 @@ import scoverage.ScoverageSbtPlugin._
 
 
 object Versions {
-  lazy val play = "2.3.1"
+  lazy val play = "2.3.7"
   lazy val play2RedisScala = s"$play.0"
 }
 
@@ -18,7 +18,7 @@ object BuildSettings {
     organization := "fr.njin",
     version := buildVersion,
     scalaVersion := "2.10.4",
-    crossScalaVersions := Seq("2.10.4", "2.11.0"),
+    crossScalaVersions := Seq("2.10.4", "2.11.4"),
     crossVersion := CrossVersion.binary
   )
 }
@@ -57,7 +57,7 @@ object RediscalaBuild extends Build {
         "Sonatype" at "http://oss.sonatype.org/content/groups/public/",
         //"Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/",
         "Typesafe repository releases" at "http://repo.typesafe.com/typesafe/releases/",
-        "rediscala" at "https://github.com/etaty/rediscala-mvn/raw/master/releases/",
+        "rediscala" at "http://dl.bintray.com/etaty/maven",
         "scct-github-repository" at "http://mtkopone.github.com/scct/maven-repo"
         ),
         libraryDependencies ++= Seq(
