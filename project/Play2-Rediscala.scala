@@ -7,7 +7,7 @@ import scoverage.ScoverageSbtPlugin._
 
 
 object Versions {
-  lazy val play = "2.3.7"
+  lazy val play = "2.3.1"
   lazy val play2RedisScala = s"$play.0"
 }
 
@@ -18,7 +18,7 @@ object BuildSettings {
     organization := "fr.njin",
     version := buildVersion,
     scalaVersion := "2.10.4",
-    crossScalaVersions := Seq("2.10.4", "2.11.4"),
+    crossScalaVersions := Seq("2.10.4", "2.11.0"),
     crossVersion := CrossVersion.binary
   )
 }
